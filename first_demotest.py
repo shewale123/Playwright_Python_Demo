@@ -11,3 +11,4 @@ with sync_playwright() as p:
     browser.close()
 
 print("Script finished")
+# Trigger workflow run
