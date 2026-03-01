@@ -1,16 +1,21 @@
-import playwright.sync_api
+from playwright.sync_api import sync_playwright
+import os
 
-with playwright.sync_api.sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
+# Decide headless mode based on environment
+HEADLESS = os.getenv("GITHUB_ACTIONS") == "true"
+
+with sync_playwright() as p:
+    browser = p.chromium.launch(headless=HEADLESS)
     page = browser.new_page()
 
-    page.goto("file:///C:/Users/hp/Projects/Playwright_Python_Demo/login/login.html")
+    # Relative path for GitHub Actions
+    page.goto("login.html")  
 
     page.fill("#username", "Username")
     page.fill("#password", "1234")
     page.click("#loginBtn")
 
-    
+    if not HEADLESS:
+        input("Press Enter to close browser...")
 
-    input("Press Enter to close browser...")
-browser.close()
+    browser.close()
