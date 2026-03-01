@@ -1,4 +1,4 @@
-name: Playwright Python Test
+name: Run login.py
 
 on:
   push:
@@ -7,19 +7,22 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-login:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install playwright
           playwright install
-      - name: Run login.py 
+
+      - name: Run login.py
         run: python login.py
